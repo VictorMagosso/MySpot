@@ -2,10 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/loginFragment">
-
+    app:startDestination="@id/createAccountFragment">
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.victor.myspot.login.presentation.view.LoginFragment"
-        android:label="LoginFragment" />
+        android:id="@+id/createAccountFragment"
+        android:name="com.victor.myspot.login.presentation.view.CreateAccountFragment"
+        android:label="CreateAccountFragment" >
+        <action
+            android:id="@+id/action_createAccountFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.victor.myspot.home.presentation.view.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>

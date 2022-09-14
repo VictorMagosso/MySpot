@@ -5,9 +5,7 @@ import com.victor.myspot.login.domain.usecase.RegisterUserUseCase
 import com.victor.myspot.login.presentation.viewintent.LoginViewIntent
 import com.victor.myspot.login.presentation.viewstate.LoginViewState
 
-class LoginViewModel(
-    private val registerUser: RegisterUserUseCase
-) : BaseViewModel<LoginViewIntent, LoginViewState>() {
+class LoginViewModel() : BaseViewModel<LoginViewIntent, LoginViewState>() {
     override fun dispatchViewIntent(intent: LoginViewIntent) {
         TODO("Not yet implemented")
     }
