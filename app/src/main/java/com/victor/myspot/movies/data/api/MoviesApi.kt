@@ -12,5 +12,5 @@ private const val KEY = BuildConfig.MOVIES_KEY
 
 interface MoviesApi {
     @GET("search/movie?api_key=$KEY")
-    suspend fun getMovie(@Query("query") movie: String): MovieResponse
+    suspend fun getMovie(@Query("query", encoded = true) movie: String): MovieResponse
 }

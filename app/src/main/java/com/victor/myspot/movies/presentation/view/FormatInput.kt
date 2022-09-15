@@ -7,7 +7,7 @@ interface FormatInput {
         textSplit(text).forEach {
             var firstChar = ""
             firstChar = "${it.firstOrNull()?.uppercase()}"
-            newString += "\\+${it.replaceFirstChar { firstChar }}"
+            newString += "+${it.replaceFirstChar { firstChar }}"
         }
         return newString.replaceFirstChar { "" }
     }

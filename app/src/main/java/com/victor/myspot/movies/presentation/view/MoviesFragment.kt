@@ -25,10 +25,10 @@ class MoviesFragment : Fragment(R.layout.movies_fragment), FormatInput {
         initObservers()
     }
 
-    private fun initObservers() = with(viewModel.viewState){
+    private fun initObservers() = with(viewModel.viewState) {
         movieUiModel.observe(viewLifecycleOwner) { uiModel ->
             with(binding.titleMovie) {
-                text = uiModel.title + uiModel.voteAverage.toString()
+                text = uiModel.items.toString()
             }
         }
     }

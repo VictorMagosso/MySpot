@@ -20,7 +20,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "MOVIES_KEY", apikeyProperties['SPOTIFY_KEY'])
+        buildConfigField("String", "MOVIES_KEY", apikeyProperties['MOVIES_KEY'])
         buildConfigField("String", "SPOTIFY_KEY", apikeyProperties['SPOTIFY_KEY'])
     }
 
@@ -79,6 +79,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
@@ -89,6 +90,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
     implementation("com.squareup.moshi:moshi:1.14.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
     //viewBinding
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.1'

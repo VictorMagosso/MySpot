@@ -14,6 +14,10 @@ class MoviesViewState {
 }
 
 data class MovieUiModel(
+    val items: List<ItemUiModel>,
+)
+
+data class ItemUiModel(
     val title: String,
     val image: String,
     val voteAverage: Double,
