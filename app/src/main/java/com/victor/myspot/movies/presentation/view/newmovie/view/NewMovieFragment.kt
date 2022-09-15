@@ -62,9 +62,17 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
 
                     override fun onLongItemClick(view: View?, position: Int) {
                         viewModel.viewState.movieUiModel.value?.items?.let { safeMovie ->
+                            val category = with(binding.editTextCategory.text.toString()) {
+                                if (binding.editTextCategory.text.isNotEmpty()) {
+                                    this
+                                } else {
+                                    "Favoritos"
+                                }
+                            }
                             viewModel.dispatchViewIntent(
                                 NewMovieViewIntent.SaveMovie(
-                                    safeMovie[position]
+                                    favoriteMovie = safeMovie[position],
+                                    category = category
                                 )
                             )
                         }

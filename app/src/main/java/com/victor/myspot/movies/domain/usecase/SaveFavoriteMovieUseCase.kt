@@ -7,10 +7,16 @@ import com.victor.myspot.movies.presentation.view.newmovie.viewstate.ItemUiModel
 class SaveFavoriteMovie(
     private val moviesRepository: IMoviesRepository,
 ) : SaveFavoriteMovieUseCase {
-    override suspend fun invoke(favoriteMovie: ItemUiModel): Result<Boolean, String> =
-        moviesRepository.saveFavoriteMovie(favoriteMovie)
+    override suspend fun invoke(
+        favoriteMovie: ItemUiModel,
+        category: String
+    ): Result<Boolean, String> =
+        moviesRepository.saveFavoriteMovie(favoriteMovie, category)
 }
 
 interface SaveFavoriteMovieUseCase {
-    suspend operator fun invoke(favoriteMovie: ItemUiModel): Result<Boolean, String>
+    suspend operator fun invoke(
+        favoriteMovie: ItemUiModel,
+        category: String
+    ): Result<Boolean, String>
 }

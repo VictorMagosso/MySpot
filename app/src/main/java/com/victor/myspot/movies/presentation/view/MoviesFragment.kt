@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.victor.myspot.R
 import com.victor.myspot.databinding.MoviesFragmentBinding
-import com.victor.myspot.movies.presentation.viewintent.MoviesViewIntent
+import com.victor.myspot.movies.data.model.MoviesPerCategoryModel
+import com.victor.myspot.movies.presentation.view.compose.CategoryListView
 import com.victor.myspot.movies.presentation.viewmodel.MoviesViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -26,11 +27,20 @@ class MoviesFragment : Fragment(R.layout.movies_fragment), FormatInput {
         initObservers()
     }
 
-    private fun initObservers() = with(viewModel.viewState) {
+    private fun setupCategoriesComposeList(movies: List<MoviesPerCategoryModel>) {
+        binding.composeCategoriesList.setContent {
+            CategoryListView(movies)
+        }
+    }
 
+
+    private fun initObservers() = with(viewModel.viewState) {
+        moviesPerCategoryModel.observe(viewLifecycleOwner) { movies ->
+            setupCategoriesComposeList(movies)
+        }
     }
 
     private fun initListeners() = with(binding) {
-        buttonMovie.setOnClickListener { findNavController().navigate(R.id.action_moviesFragment_to_newMovieFragment) }
+        buttonAddCategory.setOnClickListener { findNavController().navigate(R.id.action_moviesFragment_to_newMovieFragment) }
     }
 }

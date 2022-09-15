@@ -7,7 +7,6 @@ import com.victor.myspot.movies.domain.usecase.GetMovieFromApiUseCase
 import com.victor.myspot.movies.domain.usecase.SaveFavoriteMovieUseCase
 import com.victor.myspot.movies.presentation.mapper.MovieModelToMovieUiModelMapper
 import com.victor.myspot.movies.presentation.view.newmovie.viewintent.NewMovieViewIntent
-import com.victor.myspot.movies.presentation.view.newmovie.viewstate.ItemUiModel
 import com.victor.myspot.movies.presentation.view.newmovie.viewstate.NewMovieViewState
 import kotlinx.coroutines.launch
 
@@ -21,13 +20,13 @@ class NewMovieViewModel(
     override fun dispatchViewIntent(intent: NewMovieViewIntent) {
         when (intent) {
             is NewMovieViewIntent.GetMovieIntent -> getMovie(intent)
-            is NewMovieViewIntent.SaveMovie -> saveMovie(intent.favoriteMovie)
+            is NewMovieViewIntent.SaveMovie -> saveMovie(intent)
         }
     }
 
-    private fun saveMovie(favoriteMovie: ItemUiModel) {
+    private fun saveMovie(intent: NewMovieViewIntent.SaveMovie) {
         viewModelScope.launch {
-            saveFavoriteMovie(favoriteMovie).handleResult(
+            saveFavoriteMovie(intent.favoriteMovie, intent.category).handleResult(
                 onSuccess = { showSuccessToast() },
                 onError = { viewState.action.postValue(NewMovieViewState.Action.ErrorSavingMovie) },
                 onFinish = { viewState.isLoading.postValue(false) }

@@ -26,10 +26,10 @@ class MoviesDataSource(
         }
     }
 
-    override suspend fun saveFavoriteMovie(movie: ItemUiModel): Result<Boolean, String> {
+    override suspend fun saveFavoriteMovie(movie: ItemUiModel, category: String): Result<Boolean, String> {
         return try {
             firebaseAuth.currentUser?.let { loggedUser ->
-                getMovieReference(loggedUser)
+                getMovieReference(loggedUser, category)
                     .push()
                     .setValue(mapFrom(movie))
                     .addOnCompleteListener { task ->
@@ -46,9 +46,14 @@ class MoviesDataSource(
         }
     }
 
-    private fun getMovieReference(loggedUser: FirebaseUser) = dbRef
+    override suspend fun getFavoriteMovies(): Result<List<MoviesPerCategoryModel>, String> {
+        TODO("Not yet implemented")
+    }
+
+    private fun getMovieReference(loggedUser: FirebaseUser, category: String) = dbRef
         .child(DatabaseColumns.USER)
         .child(loggedUser.uid)
+        .child(category)
         .child(DatabaseColumns.MOVIES)
 
     private fun mapFrom(movie: ItemUiModel): FavoriteMovieModel =
