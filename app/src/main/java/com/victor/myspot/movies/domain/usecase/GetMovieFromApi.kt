@@ -5,13 +5,13 @@ import com.victor.myspot.movies.data.model.MovieError
 import com.victor.myspot.movies.data.model.MovieModel
 import com.victor.myspot.movies.data.repository.IMoviesRepository
 
-class GetMovie(
+class GetMovieFromApi(
     private val moviesRepository: IMoviesRepository
-) : GetMovieUseCase {
+) : GetMovieFromApiUseCase {
     override suspend fun invoke(movie: String): Result<MovieModel, MovieError> =
         moviesRepository.getMovie(movie)
 }
 
-interface GetMovieUseCase {
+interface GetMovieFromApiUseCase {
     suspend operator fun invoke(movie: String): Result<MovieModel, MovieError>
 }

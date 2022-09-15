@@ -3,6 +3,7 @@ package com.victor.myspot.movies.presentation.view
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.victor.myspot.R
 import com.victor.myspot.databinding.MoviesFragmentBinding
 import com.victor.myspot.movies.presentation.viewintent.MoviesViewIntent
@@ -26,20 +27,10 @@ class MoviesFragment : Fragment(R.layout.movies_fragment), FormatInput {
     }
 
     private fun initObservers() = with(viewModel.viewState) {
-        movieUiModel.observe(viewLifecycleOwner) { uiModel ->
-            with(binding.titleMovie) {
-                text = uiModel.items.toString()
-            }
-        }
+
     }
 
     private fun initListeners() = with(binding) {
-        buttonMovie.setOnClickListener {
-            viewModel.dispatchViewIntent(
-                MoviesViewIntent.GetMovieIntent(
-                    movie = formattedInput(editTextMovie.text.toString())
-                )
-            )
-        }
+        buttonMovie.setOnClickListener { findNavController().navigate(R.id.action_moviesFragment_to_newMovieFragment) }
     }
 }

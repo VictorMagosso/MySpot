@@ -6,19 +6,7 @@ class MoviesViewState {
     val isLoading = MutableLiveData(false)
     val action = MutableLiveData<Action>()
 
-    val movieUiModel = MutableLiveData<MovieUiModel>()
-
     sealed class Action {
         data class ErrorGettingMovie(val message: String) : Action()
     }
 }
-
-data class MovieUiModel(
-    val items: List<ItemUiModel>,
-)
-
-data class ItemUiModel(
-    val title: String,
-    val image: String,
-    val voteAverage: Double,
-)

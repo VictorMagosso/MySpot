@@ -3,13 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/drawable/bg.xml" value="0.1" />
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/drawable/bg_default.xml" value="0.13" />
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/font/montserrat.xml" value="0.22666666666666666" />
         <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/activity_main.xml" value="0.12037037037037036" />
         <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/app_bar.xml" value="0.21" />
         <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/create_account_fragment.xml" value="0.25" />
-        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/home_fragment.xml" value="0.14921875" />
-        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/item_category.xml" value="0.25" />
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/home_fragment.xml" value="0.22" />
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/item_category.xml" value="0.22" />
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/item_movie.xml" value="0.33" />
         <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/login_fragment.xml" value="0.19895833333333332" />
         <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/movies_fragment.xml" value="0.10989583333333333" />
+        <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/new_movie_fragment.xml" value="0.12" />
         <entry key="..\:/Desenvolvimento/0_PROJETOS/Android/MySpot/app/src/main/res/layout/songs_fragment.xml" value="0.10885416666666667" />
       </map>
     </option>

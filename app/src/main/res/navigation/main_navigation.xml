@@ -44,9 +44,17 @@
     <fragment
         android:id="@+id/moviesFragment"
         android:name="com.victor.myspot.movies.presentation.view.MoviesFragment"
-        android:label="MoviesFragment" />
+        android:label="MoviesFragment" >
+        <action
+            android:id="@+id/action_moviesFragment_to_newMovieFragment"
+            app:destination="@id/newMovieFragment" />
+    </fragment>
     <fragment
         android:id="@+id/songsFragment"
         android:name="com.victor.myspot.songs.presentation.view.SongsFragment"
         android:label="SongsFragment" />
+    <fragment
+        android:id="@+id/newMovieFragment"
+        android:name="com.victor.myspot.movies.presentation.view.newmovie.view.NewMovieFragment"
+        android:label="NewMovieFragment" />
 </navigation>

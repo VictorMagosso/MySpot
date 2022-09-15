@@ -30,8 +30,8 @@ class CategoriesAdapter(
             v.subtitle?.text = category.subtitle
 
             when(category.type) {
-                CategoryType.MUSIC -> v.image?.setImageResource(R.drawable.ic_launcher_background)
-                CategoryType.MOVIE -> v.image?.setImageResource(R.drawable.ic_launcher_background)
+                CategoryType.MUSIC -> v.image?.setImageResource(R.drawable.ic_music)
+                CategoryType.MOVIE -> v.image?.setImageResource(R.drawable.ic_video)
             }
         }
     }
