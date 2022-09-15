@@ -1,9 +1,7 @@
 package com.victor.myspot
 
 import android.app.Application
-import com.victor.myspot.di.repositoryModule
-import com.victor.myspot.di.useCaseModule
-import com.victor.myspot.di.viewModelModule
+import com.victor.myspot.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -20,6 +18,9 @@ class MySpotApplication  : Application() {
                 viewModelModule,
                 useCaseModule,
                 repositoryModule,
+                networkModule,
+                dataSourceModule,
+                mapperModule,
             )
         }
     }

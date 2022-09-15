@@ -35,6 +35,8 @@ class CreateAccountFragment : Fragment(R.layout.create_account_fragment) {
                     )
                 )
             }
+
+            buttonGoToLogin.setOnClickListener { showLoginFragment() }
         }
     }
 
@@ -49,6 +51,10 @@ class CreateAccountFragment : Fragment(R.layout.create_account_fragment) {
 
     private fun showHomeFragment() {
         findNavController().navigate(R.id.action_createAccountFragment_to_homeFragment)
+    }
+
+    private fun showLoginFragment() {
+        findNavController().navigate(R.id.action_createAccountFragment_to_loginFragment)
     }
 
     private fun showErrorToast(message: String) =
