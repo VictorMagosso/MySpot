@@ -11,6 +11,8 @@ class NewMovieViewState {
 
     sealed class Action {
         data class ErrorGettingMovie(val message: String) : Action()
+        object ShowSuccessToast : Action()
+        object ErrorSavingMovie : Action()
     }
 }
 

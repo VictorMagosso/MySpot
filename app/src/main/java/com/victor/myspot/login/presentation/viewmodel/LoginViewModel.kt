@@ -19,8 +19,8 @@ class LoginViewModel(
     }
 
     private fun signIn(intent: LoginViewIntent.SignInIntent) {
+        viewState.isLoading.postValue(true)
         viewModelScope.launch {
-            viewState.isLoading.postValue(false)
             signInUseCase(intent.email, intent.password).handleResult(
                 onSuccess = {
                     viewState.viewAction.postValue(LoginViewState.Action.NavigateToHomeFragment)

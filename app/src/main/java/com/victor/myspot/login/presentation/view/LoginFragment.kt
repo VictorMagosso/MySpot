@@ -23,6 +23,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
         with(binding) {
             lifecycleOwner = viewLifecycleOwner
+            viewState = viewModel.viewState
         }
 
         initListeners()

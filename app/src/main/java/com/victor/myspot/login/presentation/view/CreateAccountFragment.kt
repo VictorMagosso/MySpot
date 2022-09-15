@@ -20,7 +20,10 @@ class CreateAccountFragment : Fragment(R.layout.create_account_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = viewLifecycleOwner
+        with(binding) {
+            lifecycleOwner = viewLifecycleOwner
+            viewState = viewModel.viewState
+        }
         initObservers()
         initListeners()
     }

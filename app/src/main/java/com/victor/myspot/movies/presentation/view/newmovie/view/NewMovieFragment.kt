@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.victor.myspot.R
+import com.victor.myspot.core.presentation.RecyclerItemClickListener
 import com.victor.myspot.databinding.NewMovieFragmentBinding
 import com.victor.myspot.movies.presentation.view.FormatInput
 import com.victor.myspot.movies.presentation.view.newmovie.viewintent.NewMovieViewIntent
@@ -49,5 +50,27 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
                 )
             )
         }
+
+        rvNewMovies.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                requireContext(),
+                binding.rvNewMovies,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View?, position: Int) {
+//                    TODO("Not yet implemented")
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {
+                        viewModel.viewState.movieUiModel.value?.items?.let { safeMovie ->
+                            viewModel.dispatchViewIntent(
+                                NewMovieViewIntent.SaveMovie(
+                                    safeMovie[position]
+                                )
+                            )
+                        }
+                    }
+                }
+            )
+        )
     }
 }

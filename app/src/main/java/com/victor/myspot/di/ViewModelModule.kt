@@ -22,6 +22,6 @@ val viewModelModule = module {
         MoviesViewModel()
     }
     viewModel {
-        NewMovieViewModel(get(), get())
+        NewMovieViewModel(get(), get(), get())
     }
 }

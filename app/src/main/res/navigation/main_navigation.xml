@@ -12,7 +12,8 @@
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_createAccountFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"

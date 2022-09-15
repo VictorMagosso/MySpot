@@ -11,6 +11,7 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/app_bar"
+            app:title="@{@string/toolbar_title_app_name}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"

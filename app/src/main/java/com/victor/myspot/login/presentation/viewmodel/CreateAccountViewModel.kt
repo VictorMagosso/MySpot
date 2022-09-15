@@ -21,8 +21,8 @@ class CreateAccountViewModel(
     }
 
     private fun registerUser(intent: CreateAccountViewIntent.RegisterUserIntent) {
+        viewState.isButtonLoading.postValue(true)
         viewModelScope.launch {
-            viewState.isButtonLoading.postValue(true)
             registerUserUseCase(intent.email, intent.password).handleResult(
                 onSuccess = { success ->
                     if (success) {

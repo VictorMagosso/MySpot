@@ -15,5 +15,12 @@ val repositoryModule = module {
 }
 
 val dataSourceModule = module {
-    single<IMoviesDataSource> { MoviesDataSource(get(), get()) }
+    single<IMoviesDataSource> {
+        MoviesDataSource(
+            get(),
+            get(),
+            firebaseAuth = FirebaseConfig().getFirebaseAuth(),
+            dbRef = FirebaseConfig().getFirebaseDatabase()
+        )
+    }
 }
