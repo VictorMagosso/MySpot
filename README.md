@@ -4,9 +4,10 @@
 - Conceitos de clean MVVM
 - Injeção de dependência com Koin (runtime ao invés do dagger, que é em tempo de compilação)
 - Conceitos de SOLID (principalmente Single Responsibility, Open Close e Liskov simples - em uma view apenas)
-- Alguns patterns conhecidos como Adapter, Factory, Observer, Singleton (DI) e Facade (Retrofit)
-- Coroutines e programação assíncrona, visando o não vazamento de memória
+- Alguns patterns conhecidos como Adapter, Factory, Observer, Mapper, Singleton (DI) e Facade (Retrofit)
+- Coroutines e programação assíncrona, visando o não vazamento de memória e melhor fluxo do app
 - Databinding para view
+- Flow para fetch de informações
 - Jetpack compose para listagem dos filmes por categorias
 - Auth com e-mail e senha do firebase (simples)
 - Realtime database para persistir informações dos filmes
