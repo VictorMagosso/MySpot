@@ -28,6 +28,8 @@ class AccountRepository(
             firebaseAuth.signOut()
     }
 
+    override fun isUserLogged(): Boolean = firebaseAuth.currentUser != null
+
     private suspend fun mapRegisterAuthResult(
         email: String,
         password: String

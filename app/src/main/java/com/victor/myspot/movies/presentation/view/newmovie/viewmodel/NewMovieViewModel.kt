@@ -5,6 +5,7 @@ import com.victor.myspot.core.presentation.BaseViewModel
 import com.victor.myspot.movies.data.model.MovieModel
 import com.victor.myspot.movies.domain.usecase.GetMovieFromApiUseCase
 import com.victor.myspot.movies.domain.usecase.SaveFavoriteMovieUseCase
+import com.victor.myspot.movies.presentation.factory.CategoriesFactory.makeCategories
 import com.victor.myspot.movies.presentation.mapper.MovieModelToMovieUiModelMapper
 import com.victor.myspot.movies.presentation.view.newmovie.viewintent.NewMovieViewIntent
 import com.victor.myspot.movies.presentation.view.newmovie.viewstate.NewMovieViewState
@@ -21,7 +22,12 @@ class NewMovieViewModel(
         when (intent) {
             is NewMovieViewIntent.GetMovieIntent -> getMovie(intent)
             is NewMovieViewIntent.SaveMovie -> saveMovie(intent)
+            is NewMovieViewIntent.GetCategories -> mockCategories()
         }
+    }
+
+    private fun mockCategories() {
+        viewState.categories.postValue(makeCategories())
     }
 
     private fun saveMovie(intent: NewMovieViewIntent.SaveMovie) {

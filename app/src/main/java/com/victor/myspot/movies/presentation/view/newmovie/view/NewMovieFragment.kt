@@ -2,6 +2,8 @@ package com.victor.myspot.movies.presentation.view.newmovie.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.victor.myspot.R
@@ -14,9 +16,12 @@ import com.victor.myspot.movies.presentation.view.newmovie.viewstate.ItemUiModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val DEFAULT_CATEGORY = "Favoritos"
+
 class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
     private val binding by viewBinding(NewMovieFragmentBinding::bind)
     private val viewModel: NewMovieViewModel by viewModel()
+    private var category = DEFAULT_CATEGORY
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,12 +32,31 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
 
         initListeners()
         initObservers()
+
+        viewModel.dispatchViewIntent(NewMovieViewIntent.GetCategories)
     }
 
     private fun initObservers() = with(viewModel.viewState) {
         movieUiModel.observe(viewLifecycleOwner) { uiModel ->
             setupRecyclerView(binding.rvNewMovies, uiModel.items)
         }
+
+        categories.observe(viewLifecycleOwner) { categories ->
+            setupSpinner(categories)
+        }
+    }
+
+    private fun setupSpinner(categories: List<String>) {
+        val adapter =
+            ArrayAdapter(
+                requireActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                categories,
+            )
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        binding.spinnerCategory.adapter = adapter
     }
 
     private fun setupRecyclerView(rv: RecyclerView, movies: List<ItemUiModel>) {
@@ -51,6 +75,17 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
             )
         }
 
+        spinnerCategory.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                    category = spinnerCategory.selectedItem.toString()
+                }
+
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    // Do nothing
+                }
+            }
+
         rvNewMovies.addOnItemTouchListener(
             RecyclerItemClickListener(
                 requireContext(),
@@ -62,13 +97,6 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
 
                     override fun onLongItemClick(view: View?, position: Int) {
                         viewModel.viewState.movieUiModel.value?.items?.let { safeMovie ->
-                            val category = with(binding.editTextCategory.text.toString()) {
-                                if (binding.editTextCategory.text.isNotEmpty()) {
-                                    this
-                                } else {
-                                    "Favoritos"
-                                }
-                            }
                             viewModel.dispatchViewIntent(
                                 NewMovieViewIntent.SaveMovie(
                                     favoriteMovie = safeMovie[position],

@@ -1,41 +1,63 @@
 package com.victor.myspot.movies.presentation.view.compose
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.victor.myspot.R
+import com.victor.myspot.movies.data.model.FavoriteMovieModel
 import com.victor.myspot.movies.data.model.MoviesPerCategoryModel
-import com.victor.myspot.movies.presentation.view.newmovie.viewstate.ItemUiModel
 
 @Composable
-fun CategoryListView(categories: List<MoviesPerCategoryModel>) {
+fun CategoryListView(categories: List<MoviesPerCategoryModel>, navController: NavController) {
     LazyColumn {
         items(categories) { category ->
-            Text(category.title)
-            Row {
-                Image(
-                    painter = painterResource(R.drawable.movie_placeholder),
-                    contentDescription = "Adicionar filme",
-                    modifier = Modifier.fillMaxHeight().width(50.dp),
-                    contentScale = ContentScale.Crop
+            Text(
+                text = category.category,
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily.SansSerif
                 )
-                LazyRow {
-                    items(category.movies) { movie ->
+            )
+            LazyRow(
+                modifier = Modifier.height(250.dp).padding(bottom = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                val listWithDefaultItem = category.movies.toMutableList()
+                listWithDefaultItem.add(0, FavoriteMovieModel("default"))
+                items(listWithDefaultItem) { movie ->
+                    if (movie.id == "default") {
                         Image(
-                            painter = rememberAsyncImagePainter(movie.imageUrl),
+                            modifier = Modifier.clickable {
+                                navController
+                                    .navigate(R.id.action_moviesFragment_to_newMovieFragment)
+                            },
+                            painter = painterResource(id = R.drawable.add_placeholder),
+                            contentDescription = "Adicionar filme"
+                        )
+                    } else {
+                        AsyncImage(
+                            model = movie.imageUrl,
                             contentDescription = movie.title,
-                            modifier = Modifier.fillMaxHeight().width(50.dp),
+                            modifier = Modifier
+                                .padding(start = 7.dp)
+                                .width(140.dp)
+                                .fillMaxHeight(),
                             contentScale = ContentScale.Crop
                         )
                     }

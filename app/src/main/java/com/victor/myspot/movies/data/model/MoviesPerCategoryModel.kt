@@ -1,12 +1,8 @@
 package com.victor.myspot.movies.data.model
 
-data class MoviesPerCategoryModel(
-    val title: String,
-    val movies: List<Movies>
-)
+import java.io.Serializable
 
-data class Movies(
-    val imageUrl: String,
-    val title: String,
-    val voteAverage: Double
-)
+data class MoviesPerCategoryModel(
+    val category: String,
+    val movies: List<FavoriteMovieModel> = arrayListOf()
+) : Serializable

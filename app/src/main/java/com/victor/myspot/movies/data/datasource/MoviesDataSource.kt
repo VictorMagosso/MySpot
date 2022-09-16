@@ -1,13 +1,21 @@
 package com.victor.myspot.movies.data.datasource
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.victor.myspot.core.util.Result
 import com.victor.myspot.core.util.encodedString
 import com.victor.myspot.movies.data.api.MoviesApi
 import com.victor.myspot.movies.data.model.*
+import com.victor.myspot.movies.presentation.factory.CategoriesFactory.makeCategories
 import com.victor.myspot.movies.presentation.view.newmovie.viewstate.ItemUiModel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class MoviesDataSource(
@@ -26,7 +34,10 @@ class MoviesDataSource(
         }
     }
 
-    override suspend fun saveFavoriteMovie(movie: ItemUiModel, category: String): Result<Boolean, String> {
+    override suspend fun saveFavoriteMovie(
+        movie: ItemUiModel,
+        category: String
+    ): Result<Boolean, String> {
         return try {
             firebaseAuth.currentUser?.let { loggedUser ->
                 getMovieReference(loggedUser, category)
@@ -46,11 +57,66 @@ class MoviesDataSource(
         }
     }
 
-    override suspend fun getFavoriteMovies(): Result<List<MoviesPerCategoryModel>, String> {
-        TODO("Not yet implemented")
+    override suspend fun getFavoriteMovies(): Flow<List<MoviesPerCategoryModel>> = callbackFlow {
+        val movies: MutableList<MoviesPerCategoryModel> = arrayListOf()
+        val itemMovies = arrayListOf<FavoriteMovieModel>()
+        val valueListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                trySend(movies.toList())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("cancelado", "cancelou antes")
+                close()
+            }
+
+        }
+        try {
+            firebaseAuth.currentUser?.let { safeUser ->
+                makeCategories().forEach { category ->
+                    getCategoriesReference(safeUser, category)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (ds: DataSnapshot in snapshot.children) {
+                                    ds.getValue(FavoriteMovieModel::class.java)
+                                        ?.let { favoriteMovies ->
+                                            itemMovies.add(favoriteMovies)
+                                        }
+                                }
+                                movies.add(
+                                    MoviesPerCategoryModel(category, itemMovies.toList())
+                                )
+                                trySend(movies.toList())
+                                itemMovies.clear()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Log.d("cancelado", "cancelou")
+                                close()
+                            }
+                        })
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("Error", e.message.toString())
+        }
+
+        awaitClose {
+            makeCategories().forEach { category ->
+                firebaseAuth.currentUser?.let { safeUser ->
+                    getCategoriesReference(safeUser, category).removeEventListener(valueListener)
+                }
+            }
+        }
     }
 
     private fun getMovieReference(loggedUser: FirebaseUser, category: String) = dbRef
+        .child(DatabaseColumns.USER)
+        .child(loggedUser.uid)
+        .child(category)
+        .child(DatabaseColumns.MOVIES)
+
+    private fun getCategoriesReference(loggedUser: FirebaseUser, category: String) = dbRef
         .child(DatabaseColumns.USER)
         .child(loggedUser.uid)
         .child(category)

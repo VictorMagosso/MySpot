@@ -9,30 +9,14 @@
         android:layout_height="match_parent"
         tools:background="@drawable/bg_default">
 
-
-        <TextView
-            android:id="@+id/title_movie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Filmes"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+        <ImageButton
+            android:id="@+id/ic_go_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/ic_go_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edit_text_movie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:inputType="textEmailAddress"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/title_response"
@@ -45,24 +29,17 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_movie" />
-
-        <Button
-            android:id="@+id/button_add_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="adicionar categoria"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="@+id/title_response"
-            app:layout_constraintTop_toBottomOf="@+id/title_response" />
+            app:layout_constraintTop_toBottomOf="@+id/ic_go_back" />
 
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/compose_categories_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="15dp"
             android:layout_marginTop="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/button_add_category"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_response" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

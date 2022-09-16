@@ -7,4 +7,5 @@ interface IAccountRepository {
     suspend fun registerUser(email: String, password: String): Result<Boolean, String>
     suspend fun signIn(email: String, password: String): Result<User, String>
     fun logout()
+    fun isUserLogged(): Boolean
 }

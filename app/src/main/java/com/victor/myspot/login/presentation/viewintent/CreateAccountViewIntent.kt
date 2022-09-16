@@ -6,4 +6,6 @@ sealed class CreateAccountViewIntent {
         val email: String,
         val password: String
     ) : CreateAccountViewIntent()
+
+    object CheckUserAuth : CreateAccountViewIntent()
 }

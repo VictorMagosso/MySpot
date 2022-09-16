@@ -2,6 +2,7 @@ package com.victor.myspot.login.presentation.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,7 +27,10 @@ class CreateAccountFragment : Fragment(R.layout.create_account_fragment) {
         }
         initObservers()
         initListeners()
+        viewModel.dispatchViewIntent(CreateAccountViewIntent.CheckUserAuth)
     }
+
+
 
     private fun initListeners() {
         with(binding) {

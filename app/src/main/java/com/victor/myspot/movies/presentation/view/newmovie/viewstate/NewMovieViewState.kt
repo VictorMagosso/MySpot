@@ -6,6 +6,7 @@ import com.victor.myspot.core.data.api.UrlFactory.MOVIE_BASE_URL_IMAGE
 class NewMovieViewState {
     val isLoading = MutableLiveData(false)
     val action = MutableLiveData<Action>()
+    val categories = MutableLiveData<List<String>>()
 
     val movieUiModel = MutableLiveData<MovieUiModel>()
 

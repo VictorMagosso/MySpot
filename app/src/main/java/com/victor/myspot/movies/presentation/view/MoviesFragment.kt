@@ -8,6 +8,7 @@ import com.victor.myspot.R
 import com.victor.myspot.databinding.MoviesFragmentBinding
 import com.victor.myspot.movies.data.model.MoviesPerCategoryModel
 import com.victor.myspot.movies.presentation.view.compose.CategoryListView
+import com.victor.myspot.movies.presentation.viewintent.MoviesViewIntent
 import com.victor.myspot.movies.presentation.viewmodel.MoviesViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,11 +26,12 @@ class MoviesFragment : Fragment(R.layout.movies_fragment), FormatInput {
 
         initListeners()
         initObservers()
+        viewModel.dispatchViewIntent(MoviesViewIntent.GetFavoritesMovies)
     }
 
     private fun setupCategoriesComposeList(movies: List<MoviesPerCategoryModel>) {
         binding.composeCategoriesList.setContent {
-            CategoryListView(movies)
+            CategoryListView(movies, findNavController())
         }
     }
 
@@ -41,6 +43,6 @@ class MoviesFragment : Fragment(R.layout.movies_fragment), FormatInput {
     }
 
     private fun initListeners() = with(binding) {
-        buttonAddCategory.setOnClickListener { findNavController().navigate(R.id.action_moviesFragment_to_newMovieFragment) }
+        icGoBack.setOnClickListener { findNavController().popBackStack() }
     }
 }

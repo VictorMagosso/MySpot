@@ -13,7 +13,7 @@ val viewModelModule = module {
         LoginViewModel(signInUseCase = get())
     }
     viewModel {
-        CreateAccountViewModel(registerUserUseCase = get())
+        CreateAccountViewModel(registerUserUseCase = get(), isUserLoggedInUseCase = get())
     }
     viewModel {
         HomeViewModel(logoutUseCase = get())
