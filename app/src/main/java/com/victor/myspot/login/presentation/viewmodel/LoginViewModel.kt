@@ -21,11 +21,11 @@ class LoginViewModel(
     private fun signIn(intent: LoginViewIntent.SignInIntent) {
         viewState.isLoading.postValue(true)
         viewModelScope.launch {
-            signInUseCase(intent.email, intent.password).handleResult(
+            signInUseCase(intent.email, intent.password).getResult(
                 onSuccess = {
                     viewState.viewAction.postValue(LoginViewState.Action.NavigateToHomeFragment)
                 },
-                onError = { errorMessage ->
+                onFailure = { errorMessage ->
                     viewState.viewAction.postValue(LoginViewState.Action.ShowErrorToast(errorMessage))
                 },
                 onFinish = { viewState.isLoading.postValue(false) }

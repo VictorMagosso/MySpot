@@ -24,9 +24,9 @@ class MoviesViewModel(
     private fun deleteMovie(intent: MoviesViewIntent.DeleteMovie) {
         viewState.isLoading.postValue(true)
         viewModelScope.launch {
-            deleteMovieUseCase(intent.id, intent.category).handleResult(
+            deleteMovieUseCase(intent.id, intent.category).getResult(
                 onSuccess = { getMovies() },
-                onError = { viewState.action.postValue(MoviesViewState.Action.ErrorDeletingMovie(it)) },
+                onFailure = { viewState.action.postValue(MoviesViewState.Action.ErrorDeletingMovie(it)) },
                 onFinish = { viewState.isLoading.postValue(false) }
             )
         }

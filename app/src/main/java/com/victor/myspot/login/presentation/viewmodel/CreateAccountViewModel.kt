@@ -32,7 +32,7 @@ class CreateAccountViewModel(
     private fun registerUser(intent: CreateAccountViewIntent.RegisterUserIntent) {
         viewState.isButtonLoading.postValue(true)
         viewModelScope.launch {
-            registerUserUseCase(intent.email, intent.password).handleResult(
+            registerUserUseCase(intent.email, intent.password).getResult(
                 onSuccess = { success ->
                     if (success) {
                         viewState.viewAction.postValue(CreateAccountViewState.Action.NavigateToHome)
@@ -44,7 +44,7 @@ class CreateAccountViewModel(
                         )
                     }
                 },
-                onError = { errorMessage ->
+                onFailure = { errorMessage ->
                     viewState.viewAction.postValue(
                         CreateAccountViewState.Action.ShowErrorMessage(
                             errorMessage

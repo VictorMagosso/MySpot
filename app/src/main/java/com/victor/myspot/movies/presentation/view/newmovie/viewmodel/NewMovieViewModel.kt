@@ -32,9 +32,9 @@ class NewMovieViewModel(
 
     private fun saveMovie(intent: NewMovieViewIntent.SaveMovie) {
         viewModelScope.launch {
-            saveFavoriteMovie(intent.favoriteMovie, intent.category).handleResult(
+            saveFavoriteMovie(intent.favoriteMovie, intent.category).getResult(
                 onSuccess = { showSuccessToast() },
-                onError = { viewState.action.postValue(NewMovieViewState.Action.ErrorSavingMovie) },
+                onFailure = { viewState.action.postValue(NewMovieViewState.Action.ErrorSavingMovie) },
                 onFinish = { viewState.isLoading.postValue(false) }
             )
         }
@@ -43,9 +43,9 @@ class NewMovieViewModel(
     private fun getMovie(intent: NewMovieViewIntent.GetMovieIntent) {
         viewModelScope.launch {
             viewState.isLoading.postValue(true)
-            getMovieUseCase(intent.movie).handleResult(
+            getMovieUseCase(intent.movie).getResult(
                 onSuccess = { updateUiModel(it) },
-                onError = { viewState.action.postValue(NewMovieViewState.Action.ErrorGettingMovie(it.message)) },
+                onFailure = { viewState.action.postValue(NewMovieViewState.Action.ErrorGettingMovie(it.message)) },
                 onFinish = { viewState.isLoading.postValue(false) }
             )
         }
