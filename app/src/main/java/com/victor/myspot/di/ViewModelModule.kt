@@ -19,7 +19,7 @@ val viewModelModule = module {
         HomeViewModel(logoutUseCase = get())
     }
     viewModel {
-        MoviesViewModel(getFavoriteMovieUseCase = get())
+        MoviesViewModel(getFavoriteMovieUseCase = get(), deleteMovieUseCase = get())
     }
     viewModel {
         NewMovieViewModel(get(), get(), get())

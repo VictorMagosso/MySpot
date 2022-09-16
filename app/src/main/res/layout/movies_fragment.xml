@@ -4,10 +4,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewState"
+            type="com.victor.myspot.movies.presentation.viewstate.MoviesViewState" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:background="@drawable/bg_default">
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            visible="@{viewState.isLoading}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="180dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageButton
             android:id="@+id/ic_go_back"
@@ -35,6 +56,7 @@
             android:id="@+id/compose_categories_list"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            visible="@{!viewState.isLoading}"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="25dp"
             app:layout_constraintBottom_toBottomOf="parent"

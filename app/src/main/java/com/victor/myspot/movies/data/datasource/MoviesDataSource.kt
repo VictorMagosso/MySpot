@@ -41,7 +41,7 @@ class MoviesDataSource(
         return try {
             firebaseAuth.currentUser?.let { loggedUser ->
                 getMovieReference(loggedUser, category)
-                    .push()
+                    .child(movie.title.encodedString())
                     .setValue(mapFrom(movie))
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -109,6 +109,26 @@ class MoviesDataSource(
             }
         }
     }
+
+    override suspend fun deleteMovie(id: String, category: String): Result<Boolean, String> = try {
+        firebaseAuth.currentUser?.let { safeUser ->
+            getMovieReference(safeUser, category)
+                .child(id)
+                .removeValue()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Result.Success(true)
+                    } else {
+                        Log.d("error", "erro ao deletar")
+                        Result.Error("Erro ao deletar")
+                    }
+                }.await()
+        }
+        Result.Success(true)
+    } catch (e: Exception) {
+        Result.Error(e.message.toString())
+    }
+
 
     private fun getMovieReference(loggedUser: FirebaseUser, category: String) = dbRef
         .child(DatabaseColumns.USER)

@@ -20,4 +20,7 @@ class MoviesRepository(private val moviesDataSource: IMoviesDataSource) : IMovie
 
     override suspend fun getFavoriteMovies(): Flow<List<MoviesPerCategoryModel>> =
         moviesDataSource.getFavoriteMovies()
+
+    override suspend fun deleteMovie(id: String, category: String): Result<Boolean, String> =
+        moviesDataSource.deleteMovie(id, category)
 }

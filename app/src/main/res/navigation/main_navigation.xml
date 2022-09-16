@@ -48,7 +48,8 @@
         android:label="MoviesFragment" >
         <action
             android:id="@+id/action_moviesFragment_to_newMovieFragment"
-            app:destination="@id/newMovieFragment" />
+            app:destination="@id/newMovieFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/songsFragment"

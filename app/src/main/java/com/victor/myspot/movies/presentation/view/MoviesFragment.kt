@@ -2,6 +2,7 @@ package com.victor.myspot.movies.presentation.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.victor.myspot.R
@@ -10,6 +11,7 @@ import com.victor.myspot.movies.data.model.MoviesPerCategoryModel
 import com.victor.myspot.movies.presentation.view.compose.CategoryListView
 import com.victor.myspot.movies.presentation.viewintent.MoviesViewIntent
 import com.victor.myspot.movies.presentation.viewmodel.MoviesViewModel
+import com.victor.myspot.movies.presentation.viewstate.MoviesViewState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,12 +28,25 @@ class MoviesFragment : Fragment(R.layout.movies_fragment), FormatInput {
 
         initListeners()
         initObservers()
+        initActionObserver()
         viewModel.dispatchViewIntent(MoviesViewIntent.GetFavoritesMovies)
+    }
+
+    private fun initActionObserver() = with(viewModel.viewState) {
+        action.observe(viewLifecycleOwner) { action ->
+            when(action) {
+                is MoviesViewState.Action.ErrorDeletingMovie -> showErrorMessage(action.message)
+            }
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupCategoriesComposeList(movies: List<MoviesPerCategoryModel>) {
         binding.composeCategoriesList.setContent {
-            CategoryListView(movies, findNavController())
+            CategoryListView(movies, findNavController(), viewModel)
         }
     }
 

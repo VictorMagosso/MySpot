@@ -12,4 +12,5 @@ val useCaseModule = module {
     factory<SaveFavoriteMovieUseCase> { SaveFavoriteMovie(moviesRepository = get()) }
     factory<GetFavoriteMoviesUseCase> { GetFavoriteMovies(moviesRepository = get()) }
     factory<IsUserLoggedInUseCase> { IsUserLoggedIn(accountRepository = get()) }
+    factory<DeleteMovieUseCase> { DeleteMovie(moviesRepository = get()) }
 }

@@ -1,7 +1,9 @@
 package com.victor.myspot.movies.presentation.view.compose
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -21,11 +23,18 @@ import coil.compose.AsyncImage
 import com.victor.myspot.R
 import com.victor.myspot.movies.data.model.FavoriteMovieModel
 import com.victor.myspot.movies.data.model.MoviesPerCategoryModel
+import com.victor.myspot.movies.presentation.viewintent.MoviesViewIntent
+import com.victor.myspot.movies.presentation.viewmodel.MoviesViewModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CategoryListView(categories: List<MoviesPerCategoryModel>, navController: NavController) {
+fun CategoryListView(
+    categories: List<MoviesPerCategoryModel>,
+    navController: NavController,
+    viewModel: MoviesViewModel,
+) {
     LazyColumn {
-        items(categories) { category ->
+        items(categories.sortedBy { it.category }) { category ->
             Text(
                 text = category.category,
                 style = TextStyle(
@@ -35,7 +44,9 @@ fun CategoryListView(categories: List<MoviesPerCategoryModel>, navController: Na
                 )
             )
             LazyRow(
-                modifier = Modifier.height(250.dp).padding(bottom = 12.dp),
+                modifier = Modifier
+                    .height(250.dp)
+                    .padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 val listWithDefaultItem = category.movies.toMutableList()
@@ -57,7 +68,14 @@ fun CategoryListView(categories: List<MoviesPerCategoryModel>, navController: Na
                             modifier = Modifier
                                 .padding(start = 7.dp)
                                 .width(140.dp)
-                                .fillMaxHeight(),
+                                .fillMaxHeight()
+                                .combinedClickable(onLongClick = {
+                                    viewModel.dispatchViewIntent(
+                                        MoviesViewIntent.DeleteMovie(
+                                            movie.id, category.category
+                                        )
+                                    )
+                                }, onClick = {}),
                             contentScale = ContentScale.Crop
                         )
                     }

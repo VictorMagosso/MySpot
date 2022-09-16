@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:background="@drawable/bg_default">
+
+        <ImageButton
+            android:id="@+id/ic_go_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="25dp"
+            android:background="@drawable/ic_go_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edit_text_movie"
@@ -13,28 +24,45 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:autofillHints="name"
+            android:hint="Ex.: Thor, Jack Reacher"
             android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/ic_go_back" />
+
+        <TextView
+            android:id="@+id/text_choose_category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="start"
+            android:text="Escolha a categoria em que deseja adicionar seu filme"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/spinner_category"
+            app:layout_constraintStart_toStartOf="@+id/edit_text_movie"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_movie" />
 
         <Spinner
             android:id="@+id/spinner_category"
-            style="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_choose_category"
             app:layout_constraintEnd_toEndOf="@+id/edit_text_movie"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/edit_text_movie"
-            app:layout_constraintTop_toBottomOf="@+id/edit_text_movie" />
+            app:layout_constraintTop_toTopOf="@+id/text_choose_category" />
 
         <Button
             android:id="@+id/button_movie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="Pesquisar"
+            android:layout_height="64dp"
+            android:layout_margin="24dp"
+            android:backgroundTint="@color/purple_700"
+            android:text="Encontrar"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinner_category" />

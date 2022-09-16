@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.victor.myspot.R
 import com.victor.myspot.core.presentation.RecyclerItemClickListener
@@ -13,6 +15,7 @@ import com.victor.myspot.movies.presentation.view.FormatInput
 import com.victor.myspot.movies.presentation.view.newmovie.viewintent.NewMovieViewIntent
 import com.victor.myspot.movies.presentation.view.newmovie.viewmodel.NewMovieViewModel
 import com.victor.myspot.movies.presentation.view.newmovie.viewstate.ItemUiModel
+import com.victor.myspot.movies.presentation.view.newmovie.viewstate.NewMovieViewState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -32,8 +35,19 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
 
         initListeners()
         initObservers()
+        initActionObserver()
 
         viewModel.dispatchViewIntent(NewMovieViewIntent.GetCategories)
+    }
+
+    private fun initActionObserver() = with(viewModel.viewState) {
+        action.observe(viewLifecycleOwner) { action ->
+            when (action) {
+                is NewMovieViewState.Action.ErrorGettingMovie -> showToast("Ops! Ocorreu um erro :(")
+                NewMovieViewState.Action.ErrorSavingMovie -> showToast("Não foi possível adicionar o filme.")
+                NewMovieViewState.Action.ShowSuccessToast -> showToast("Filme adicionado com sucesso!")
+            }
+        }
     }
 
     private fun initObservers() = with(viewModel.viewState) {
@@ -75,6 +89,10 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
             )
         }
 
+        icGoBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         spinnerCategory.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, view: View?, pos: Int, id: Long) {
@@ -92,7 +110,7 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
                 binding.rvNewMovies,
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View?, position: Int) {
-//                    TODO("Not yet implemented")
+                        showToast("Mantenha o filme pressionado para adicionar")
                     }
 
                     override fun onLongItemClick(view: View?, position: Int) {
@@ -108,5 +126,13 @@ class NewMovieFragment : Fragment(R.layout.new_movie_fragment), FormatInput {
                 }
             )
         )
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(
+            requireContext(),
+            message,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

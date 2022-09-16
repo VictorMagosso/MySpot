@@ -9,6 +9,6 @@ class MoviesViewState {
     val moviesPerCategoryModel = MutableLiveData<List<MoviesPerCategoryModel>>()
 
     sealed class Action {
-        data class ErrorGettingMovie(val message: String) : Action()
+        data class ErrorDeletingMovie(val message: String) : Action()
     }
 }

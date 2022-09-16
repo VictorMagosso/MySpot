@@ -11,5 +11,6 @@ interface IMoviesDataSource {
     suspend fun getMovie(movie: String): Result<MovieModel, MovieError>
     suspend fun saveFavoriteMovie(movie: ItemUiModel, category: String): Result<Boolean, String>
     suspend fun getFavoriteMovies(): Flow<List<MoviesPerCategoryModel>>
+    suspend fun deleteMovie(id: String, category: String): Result<Boolean, String>
 }
 
